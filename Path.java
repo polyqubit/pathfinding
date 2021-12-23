@@ -1,4 +1,7 @@
+import java.util.*;
+
 public class Path {
+	static ArrayList<Integer> travel = new ArrayList<>();
 	//Checking if a path exists before actually finding a path
 	public static boolean isSolvable(Grid g) {
 		//Directions(in order of preference): Down(1), Right(2), Up(3), Left(4)
@@ -14,21 +17,25 @@ public class Path {
 				currentPos[0]++;
 				forbidRepeat = -1;
 				System.out.println("DOWN");
+				travel.add(1);
 			}
 			else if((currentPos[1]!=(g.width-1))&&((currentPos[1]+1)<=g.width)&&(g.grid[currentPos[0]][currentPos[1]+1]==' ')&&(forbidRepeat!=2)) {
 				currentPos[1]++;
 				forbidRepeat = -1;
 				System.out.println("RIGHT");
+				travel.add(2);
 			}
 			else if((currentPos[0]!=0)&&(g.grid[currentPos[0]-1][currentPos[1]]==' ')) {
 				currentPos[0]--;
 				forbidRepeat = 1;
 				System.out.println("UP");
+				travel.add(3);
 			}
 			else if((currentPos[1]!=0)&&(g.grid[currentPos[0]][currentPos[1]-1]==' ')) {
 				currentPos[1]--;
 				forbidRepeat = 2;
 				System.out.println("LEFT");
+				travel.add(4);
 			}
 			else {return false;}
 			if((currentPos[0]==(g.height-1))&&(currentPos[1]==(g.width-1))) {return true;}
