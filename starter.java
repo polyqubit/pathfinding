@@ -6,5 +6,8 @@ public class starter {
 		g.constructGrid();
 		System.out.println("Success");
 		g.print();
+		if(Path.isSolvable(g)) {
+		System.out.println("\nMaze has a solution");
+		}
 	}
 }

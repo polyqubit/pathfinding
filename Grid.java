@@ -3,8 +3,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Grid {
-	int width, height;
-	char[][] grid;
+	public int width, height;
+	public char[][] grid;
 	Random rand = new Random();
 	public Grid() {
 		width = 10;
@@ -27,11 +27,12 @@ public class Grid {
 			for(int j=0;j<grid[i].length;j++) {
 				System.out.print(grid[i][j]);
 			}
-			System.out.println();
+			System.out.println("|");
 		}
 		for(int i=0;i<width;i++) {
 			System.out.print("-");
 		}
+		System.out.println("");
 	}
 	public void constructGrid() {
 		//basically a maze generator, minus any skill
@@ -41,11 +42,6 @@ public class Grid {
 			}
 		}
 		grid[0][0] = ' ';
-	}
-	public int getW() {
-		return width; 
-	}
-	public int getH() {
-		return height;
+    grid[width-1][height-1] = ' ';
 	}
 }
