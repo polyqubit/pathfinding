@@ -19,17 +19,18 @@ public class Grid {
 		else {grid = new char[10][10];}
 	}
 	public void print() {
-		for(int i=0;i<width;i++) {
+		for(int i=0;i<width+2;i++) {
 			System.out.print("-");
 		}
 		System.out.println();
 		for(int i=0;i<grid.length;i++) {
+			System.out.print("|");
 			for(int j=0;j<grid[i].length;j++) {
 				System.out.print(grid[i][j]);
 			}
 			System.out.println("|");
 		}
-		for(int i=0;i<width;i++) {
+		for(int i=0;i<width+2;i++) {
 			System.out.print("-");
 		}
 		System.out.println("");
@@ -42,6 +43,6 @@ public class Grid {
 			}
 		}
 		grid[0][0] = ' ';
-    grid[width-1][height-1] = ' ';
+		grid[width-1][height-1] = ' ';
 	}
 }
