@@ -6,7 +6,8 @@ public class Path {
 	public static boolean isSolvable(Grid g) {
 		//Directions(in order of preference): Down(1), Right(2), Up(3), Left(4)
 		int[] currentPos = {0,0};  //Graph is expressed {y,x}
-		int[] previousPos = new int[2];
+		int[] repeatCheck = new int[5]; //Tries to avoid repeating actions
+		int c = 0; //counter for repeatCheck
 		int forbidRepeat = -1; //Prevents going in a direction opposite to what the path just came from(eg going down after going up)
 	
 		for(int i=0;i<2*(g.height*g.width)-1;i++) {
@@ -39,6 +40,7 @@ public class Path {
 			}
 			else {return false;}
 			if((currentPos[0]==(g.height-1))&&(currentPos[1]==(g.width-1))) {return true;}
+			c++;
 		}
 		return false;
 	}
