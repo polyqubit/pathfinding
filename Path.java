@@ -1,9 +1,9 @@
 import java.util.*;
 
 public class Path {
-	static ArrayList<Integer> travel = new ArrayList<>();
 	//Checking if a path exists before actually finding a path
-	public static boolean isSolvable(Grid g) {
+	//EDIT(1/5/22): Checking whether a path exists is redundant as the actual pathfinding algorithm should already have that functionality 
+	/* public static boolean isSolvable(Grid g) {
 		//Directions(in order of preference): Down(1), Right(2), Up(3), Left(4)
 		int[] currentPos = {0,0};  //Graph is expressed {y,x}
 		int[] repeatCheck = new int[5]; //Tries to avoid repeating actions
@@ -43,5 +43,10 @@ public class Path {
 			c++;
 		}
 		return false;
+	} */
+	public static ArrayList<Integer> find(Grid g) {
+		ArrayList<Integer> a = new ArrayList<>();
+		
+		return a; 
 	}
 }
