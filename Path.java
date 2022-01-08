@@ -44,9 +44,21 @@ public class Path {
 		}
 		return false;
 	} */
-	public static ArrayList<Integer> find(Grid g) {
-		ArrayList<Integer> a = new ArrayList<>();
-		
-		return a; 
+	public static ArrayList<Integer> aStarSearch(Grid g, int[] start, int[] end) { 
+		if((start.length!=2)||(end.length!=2)) {return null;} //doesnt make sense for a coordinate to not have 2 elements
+		ArrayList<Integer> path = new ArrayList<>();     //1-DOWN, 2-RIGHT, 3-UP, 4-LEFT
+		ArrayList<Integer[]> open = new ArrayList<>();   //coords to be explored
+		ArrayList<Integer[]> closed = new ArrayList<>(); //coords already explored
+		//NOTE on Integer[]: always 4 element array - first two elements
+		//are x,y; next element is the distance from the starting position,
+		//and the last is the distance from the goal node
+		//DISTANCE: distance from goal is |xCurrent-xFinal|+|yStart-yFinal|
+		//distance from start is the shortest *known* amount of cells to travel to get to that position
+
+		//actual pathfinding
+		while(!open.isEmpty()) {
+			
+		}
+		return path;
 	}
 }
