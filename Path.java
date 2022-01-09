@@ -68,6 +68,7 @@ public class Path {
 			Integer[] lowestVal = open.get(0); //coord of cell with lowest distance total(first pass always is the starting cell)
 			int index = 0; //index of the coord to be removed
 			int c = 0; //counter
+			//find lowest total
 			for(Integer[] i : open) {
 				if((i[2]+i[3])<(lowestVal[2]+lowestVal[3])) {
 					index = c;
@@ -77,6 +78,10 @@ public class Path {
 				}
 				c++;
 			}
+			//find neighbors
+			
+
+			closed.add(open.get(index));
 			open.remove(index);
 		}
 		return path;
