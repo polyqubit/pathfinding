@@ -44,6 +44,10 @@ public class Path {
 		}
 		return false;
 	} */
+	static int abs(int a) {return (a<0) ? -1*a : a;}
+	static int distanceCheck(int[] cell, int[] goal) {
+		return abs(cell[0]-goal[0]) + abs(cell[1]-goal[1]);
+	}
 	public static ArrayList<Integer> aStarSearch(Grid g, int[] start, int[] end) { 
 		if((start.length!=2)||(end.length!=2)) {return null;} //doesnt make sense for a coordinate to not have 2 elements
 		ArrayList<Integer> path = new ArrayList<>();     //1-DOWN, 2-RIGHT, 3-UP, 4-LEFT
@@ -55,9 +59,25 @@ public class Path {
 		//DISTANCE: distance from goal is |xCurrent-xFinal|+|yStart-yFinal|
 		//distance from start is the shortest *known* amount of cells to travel to get to that position
 
+		//add the origin node to the open list
+		Integer[] START = {start[0],start[1],0,0}; //guide said to leave both distances at 0 idk
+		open.add(START);
+
 		//actual pathfinding
 		while(!open.isEmpty()) {
-			
+			Integer[] lowestVal = open.get(0); //coord of cell with lowest distance total(first pass always is the starting cell)
+			int index = 0; //index of the coord to be removed
+			int c = 0; //counter
+			for(Integer[] i : open) {
+				if((i[2]+i[3])<(lowestVal[2]+lowestVal[3])) {
+					index = c;
+					for(int j=0;j<i.length;j++) {
+						lowestVal[j] = i[j];
+					}
+				}
+				c++;
+			}
+			open.remove(index);
 		}
 		return path;
 	}
