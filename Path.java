@@ -78,7 +78,9 @@ public class Path {
 				}
 				c++;
 			}
-			//find neighbors
+			//find neighbors, spaghetti code
+                        //North:
+                        if(()(g.grid[lowestVal[0]][lowestVal[1]-1]==' ')
 			
 
 			closed.add(open.get(index));
