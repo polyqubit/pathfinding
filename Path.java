@@ -79,10 +79,12 @@ public class Path {
 				c++;
 			}
 			//find neighbors, spaghetti code
-                        //North:
-                        if(()(g.grid[lowestVal[0]][lowestVal[1]-1]==' ')
-			
-
+            //North:
+			if(lowestVal[1]>0) {
+            	if(g.grid[lowestVal[0]][lowestVal[1]-1]==' ') {
+					
+				}
+			}
 			closed.add(open.get(index));
 			open.remove(index);
 		}
