@@ -15,8 +15,10 @@ public class Node {
     public void setParent(Node parent) {
         this.parent = parent;
     }
-    public Integer[] getPos() {
-        return pos;
+    public int getX() {
+        return pos[0];
     }
-    
+    public int getY() {
+        return pos[1];
+    }
 }

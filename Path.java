@@ -48,40 +48,37 @@ public class Path {
 	static int distanceCheck(int[] cell, int[] goal) {
 		return abs(cell[0]-goal[0]) + abs(cell[1]-goal[1]);
 	}
-	public static ArrayList<Integer> aStarSearch(Grid g, int[] start, int[] end) { 
-		if((start.length!=2)||(end.length!=2)) {return null;} //doesnt make sense for a coordinate to not have 2 elements
+	public static ArrayList<Integer> aStarSearch(Grid g, Node start, int[] end) {
+    //start is a Node and end is an array, for very arbitrary reasons
 		ArrayList<Integer> path = new ArrayList<>();     //1-DOWN, 2-RIGHT, 3-UP, 4-LEFT
-		ArrayList<Integer[]> open = new ArrayList<>();   //coords to be explored
-		ArrayList<Integer[]> closed = new ArrayList<>(); //coords already explored
-		//NOTE on Integer[]: always 4 element array - first two elements
-		//are x,y; next element is the distance from the starting position,
-		//and the last is the distance from the goal node
+		ArrayList<Node> open = new ArrayList<>();   //cells to be explored
+		ArrayList<Node[]> closed = new ArrayList<>(); //cells already explored
 		//DISTANCE: distance from goal is |xCurrent-xFinal|+|yStart-yFinal|
 		//distance from start is the shortest *known* amount of cells to travel to get to that position
 
 		//add the origin node to the open list
-		Integer[] START = {start[0],start[1],0,0}; //guide said to leave both distances at 0 idk
-		open.add(START);
+		open.add(start);
 
 		//actual pathfinding
 		while(!open.isEmpty()) {
-			Integer[] lowestVal = open.get(0); //coord of cell with lowest distance total(first pass always is the starting cell)
+			Node lowestVal = open.get(0); //cell with lowest distance total(first pass always is the starting cell)
+      ArrayList<Node> successors = new ArrayList<>();//successors to selected node
 			int index = 0; //index of the coord to be removed
 			int c = 0; //counter
 			//find lowest total
-			for(Integer[] i : open) {
-				if((i[2]+i[3])<(lowestVal[2]+lowestVal[3])) {
+			for(Node i : open) {
+				if((i.getX()+i.getY())<(lowestVal[2]+lowestVal[3])) {
 					index = c;
 					for(int j=0;j<i.length;j++) {
-						lowestVal[j] = i[j];
+						lowestVal = i;
 					}
 				}
 				c++;
 			}
 			//find neighbors, spaghetti code
-            //North:
+      //North:
 			if(lowestVal[1]>0) {
-            	if(g.grid[lowestVal[0]][lowestVal[1]-1]==' ') {
+        if(g.grid[lowestVal[0]][lowestVal[1]-1]==' ') {
 					
 				}
 			}
