@@ -49,22 +49,22 @@ public class Path {
 		return abs(cell[0]-goal[0]) + abs(cell[1]-goal[1]);
 	}
 	public static ArrayList<Integer> aStarSearch(Grid g, Node start, int[] end) {
-    //start is a Node and end is an array, for very arbitrary reasons
+		//start is a Node and end is an array, for very arbitrary reasons
 		ArrayList<Integer> path = new ArrayList<>();     //1-DOWN, 2-RIGHT, 3-UP, 4-LEFT
 		ArrayList<Node> open = new ArrayList<>();   //cells to be explored
 		ArrayList<Node> closed = new ArrayList<>(); //cells already explored
-    ArrayList<Node> avoid = new ArrayList<>(); //obstacle cells
+		ArrayList<Node> avoid = new ArrayList<>(); //obstacle cells
 		//DISTANCE: distance from goal is |xCurrent-xFinal|+|yStart-yFinal|
 		//distance from start is the shortest *known* amount of cells to travel to get to that position
 
 		//add the origin node to the open list
 		open.add(start);
-    //generation count to determine distance from start
-    int generation = 0;
+		//generation count to determine distance from start
+		int generation = 0;
 		//actual pathfinding
 		while(!open.isEmpty()) {
 			Node lowestVal = open.get(0); //cell with lowest distance total(first pass always is the starting cell)
-      ArrayList<Node> successors = new ArrayList<>();//successors to selected node
+			ArrayList<Node> successors = new ArrayList<>();//successors to selected node
 			int index = 0; //index of the coord to be removed
 			int c = 0; //counter
 			//find lowest total
@@ -78,33 +78,48 @@ public class Path {
 				c++;
 			}
 			//find neighbors, spaghetti code
-      //North:
+			//North:
 			if(lowestVal.getY()>0) {
-        Node check = new Node({lowestVal.getX(),lowestVal.getY()-1},generation+1,distanceCheck({start.getX,start.getY},{end[0],end[1]}));
-        if(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ') {
-					open.add(check);
+				Node check = new Node({lowestVal.getX(),lowestVal.getY()-1},generation+1,distanceCheck({start.getX,start.getY},{end[0],end[1]}));
+				if(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ') {
+				open.add(check);
 				}
-        else {
-          avoid.add(check);
-          closed.add(check);
-        }
-			}
-      //East:
-			if(lowestVal[0]<g.width-1) {
-        if(g.grid[lowestVal[0]][lowestVal[1]-1]==' ') {
-					
+				else {
+					avoid.add(check);
+					closed.add(check);
 				}
 			}
-      //South:
-			if(lowestVal[1]<g.height-1) {
-        if(g.grid[lowestVal[0]][lowestVal[1]-1]==' ') {
-					
+			//East:
+			if(lowestVal.getX()<g.width-1) {
+				Node check = new Node({lowestVal.getX(),lowestVal.getY()-1},generation+1,distanceCheck({start.getX,start.getY},{end[0],end[1]}));
+				if(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ') {
+				open.add(check);
+				}
+				else {
+					avoid.add(check);
+					closed.add(check);
 				}
 			}
-      //West:
-			if(lowestVal[0]>0) {
-        if(g.grid[lowestVal[0]][lowestVal[1]-1]==' ') {
-					
+			//South:
+			if(lowestVal.getY()<g.height-1) {
+				Node check = new Node({lowestVal.getX(),lowestVal.getY()-1},generation+1,distanceCheck({start.getX,start.getY},{end[0],end[1]}));
+				if(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ') {
+				open.add(check);
+				}
+				else {
+					avoid.add(check);
+					closed.add(check);
+				}
+			}
+			//West:
+			if(lowestVal.getX()>0) {
+				Node check = new Node({lowestVal.getX(),lowestVal.getY()-1},generation+1,distanceCheck({start.getX,start.getY},{end[0],end[1]}));
+				if(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ') {
+				open.add(check);
+				}
+				else {
+					avoid.add(check);
+					closed.add(check);
 				}
 			}
       
