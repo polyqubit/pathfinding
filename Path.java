@@ -52,13 +52,15 @@ public class Path {
     //start is a Node and end is an array, for very arbitrary reasons
 		ArrayList<Integer> path = new ArrayList<>();     //1-DOWN, 2-RIGHT, 3-UP, 4-LEFT
 		ArrayList<Node> open = new ArrayList<>();   //cells to be explored
-		ArrayList<Node[]> closed = new ArrayList<>(); //cells already explored
+		ArrayList<Node> closed = new ArrayList<>(); //cells already explored
+    ArrayList<Node> avoid = new ArrayList<>(); //obstacle cells
 		//DISTANCE: distance from goal is |xCurrent-xFinal|+|yStart-yFinal|
 		//distance from start is the shortest *known* amount of cells to travel to get to that position
 
 		//add the origin node to the open list
 		open.add(start);
-
+    //generation count to determine distance from start
+    int generation = 0;
 		//actual pathfinding
 		while(!open.isEmpty()) {
 			Node lowestVal = open.get(0); //cell with lowest distance total(first pass always is the starting cell)
@@ -77,11 +79,35 @@ public class Path {
 			}
 			//find neighbors, spaghetti code
       //North:
-			if(lowestVal[1]>0) {
+			if(lowestVal.getY()>0) {
+        Node check = new Node({lowestVal.getX(),lowestVal.getY()-1},generation+1,distanceCheck({start.getX,start.getY},{end[0],end[1]}));
+        if(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ') {
+					open.add(check);
+				}
+        else {
+          avoid.add(check);
+          closed.add(check);
+        }
+			}
+      //East:
+			if(lowestVal[0]<g.width-1) {
         if(g.grid[lowestVal[0]][lowestVal[1]-1]==' ') {
 					
 				}
 			}
+      //South:
+			if(lowestVal[1]<g.height-1) {
+        if(g.grid[lowestVal[0]][lowestVal[1]-1]==' ') {
+					
+				}
+			}
+      //West:
+			if(lowestVal[0]>0) {
+        if(g.grid[lowestVal[0]][lowestVal[1]-1]==' ') {
+					
+				}
+			}
+      
 			closed.add(open.get(index));
 			open.remove(index);
 		}
