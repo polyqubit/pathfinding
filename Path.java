@@ -82,7 +82,7 @@ public class Path {
 			if(lowestVal.getY()>0) {
 				Node check = new Node({lowestVal.getX(),lowestVal.getY()-1},generation+1,distanceCheck({start.getX,start.getY},{end[0],end[1]}));
 				if(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ') {
-				open.add(check);
+					open.add(check);
 				}
 				else {
 					avoid.add(check);
@@ -92,8 +92,8 @@ public class Path {
 			//East:
 			if(lowestVal.getX()<g.width-1) {
 				Node check = new Node({lowestVal.getX(),lowestVal.getY()-1},generation+1,distanceCheck({start.getX,start.getY},{end[0],end[1]}));
-				if(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ') {
-				open.add(check);
+				if(g.grid[lowestVal.getX()+1][lowestVal.getY()]==' ') {
+					open.add(check);
 				}
 				else {
 					avoid.add(check);
@@ -103,8 +103,8 @@ public class Path {
 			//South:
 			if(lowestVal.getY()<g.height-1) {
 				Node check = new Node({lowestVal.getX(),lowestVal.getY()-1},generation+1,distanceCheck({start.getX,start.getY},{end[0],end[1]}));
-				if(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ') {
-				open.add(check);
+				if(g.grid[lowestVal.getX()][lowestVal.getY()+1]==' ') {
+					open.add(check);
 				}
 				else {
 					avoid.add(check);
@@ -114,8 +114,8 @@ public class Path {
 			//West:
 			if(lowestVal.getX()>0) {
 				Node check = new Node({lowestVal.getX(),lowestVal.getY()-1},generation+1,distanceCheck({start.getX,start.getY},{end[0],end[1]}));
-				if(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ') {
-				open.add(check);
+				if(g.grid[lowestVal.getX()-1][lowestVal.getY()]==' ') {
+					open.add(check);
 				}
 				else {
 					avoid.add(check);
