@@ -1,9 +1,16 @@
+/**
+ * {@link Node}: used to represent a position on a {@link Grid}
+ * 
+ * 
+ * 
+ */
+
 public class Node {
     Integer[] pos = {0,0};
     int distA = 0;
     int distB = 0;
     Node parent;
-    public Node(Integer[] position, int distA, int distB) {
+    public Node(int[] position, int distA, int distB) {
         //distA: distance from start
         //distB: distance from goal
         if(position.length!=2) {return;}
