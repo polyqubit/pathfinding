@@ -70,7 +70,8 @@ public class Path {
 		//generation count to determine distance from start
 		int generation = 0;
 		//node searching
-		while(!open.isEmpty()) {
+    boolean found = false;
+		while(!open.isEmpty()||found) {
 			Node lowestVal = open.get(0); //cell with lowest distance total(first pass always is the starting cell)
 			int index = 0; //index of the coord to be removed
 			int c = 0; //counter
@@ -88,7 +89,7 @@ public class Path {
 			if(lowestVal.getY()>0) {
 				int[] coords = {lowestVal.getX(),lowestVal.getY()-1};
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if((coords[0]==end[0])&&(coords[1]==end[1])) {check.setParent(lowestVal);closed.add(check);break;}
+				if((coords[0]==end[0])&&(coords[1]==end[1])) {check.setParent(lowestVal);closed.add(check);found=true;break;}
 				else if(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ') {
 					check.setParent(lowestVal);
 					open.add(check);
@@ -102,7 +103,7 @@ public class Path {
 			if(lowestVal.getX()<g.width-1) {
 				int[] coords = {lowestVal.getX()+1,lowestVal.getY()};
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if((coords[0]==end[0])&&(coords[1]==end[1])) {check.setParent(lowestVal);closed.add(check);break;}
+				if((coords[0]==end[0])&&(coords[1]==end[1])) {check.setParent(lowestVal);closed.add(check);found=true;break;}
 				else if(g.grid[lowestVal.getX()+1][lowestVal.getY()]==' ') {
 					check.setParent(lowestVal);
 					open.add(check);
@@ -116,7 +117,7 @@ public class Path {
 			if(lowestVal.getY()<g.height-1) {
 				int[] coords = {lowestVal.getX(),lowestVal.getY()+1};
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if((coords[0]==end[0])&&(coords[1]==end[1])) {check.setParent(lowestVal);closed.add(check);break;}
+				if((coords[0]==end[0])&&(coords[1]==end[1])) {check.setParent(lowestVal);closed.add(check);found=true;break;}
 				else if(g.grid[lowestVal.getX()][lowestVal.getY()+1]==' ') {
 					check.setParent(lowestVal);
 					open.add(check);
@@ -130,7 +131,7 @@ public class Path {
 			if(lowestVal.getX()>0) {
 				int[] coords = {lowestVal.getX()-1,lowestVal.getY()};
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if((coords[0]==end[0])&&(coords[1]==end[1])) {check.setParent(lowestVal);closed.add(check);break;}
+				if((coords[0]==end[0])&&(coords[1]==end[1])) {check.setParent(lowestVal);closed.add(check);found=true;break;}
 				else if(g.grid[lowestVal.getX()-1][lowestVal.getY()]==' ') {
 					check.setParent(lowestVal);
 					open.add(check);
