@@ -48,9 +48,17 @@ public class Path {
 	static int distanceCheck(int x1, int y1, int x2, int y2) {
 		return abs(x1-x2) + abs(y1-y2);
 	}
-	public static ArrayList<Integer> aStarSearch(Grid g, Node start, int[] end) {
+	public static ArrayList returnPath(Grid g, Node start, int[] end) {
+		ArrayList<Node> path = new ArrayList<>();
+		Stack<Node> outStack = aStarSearch(g,start,end);
+		while(!outStack.empty()) {
+			path.add(outStack.pop());
+		}
+		return path;
+	}
+	static Stack<Node> aStarSearch(Grid g, Node start, int[] end) {
 		//start is a Node and end is an array, for very arbitrary reasons
-		ArrayList<Integer> path = new ArrayList<>();     //1-DOWN, 2-RIGHT, 3-UP, 4-LEFT
+		Stack<Node> path = new Stack<>();     //To be interpreted into a path
 		ArrayList<Node> open = new ArrayList<>();   //cells to be explored
 		ArrayList<Node> closed = new ArrayList<>(); //cells already explored
 		ArrayList<Node> avoid = new ArrayList<>(); //obstacle cells
@@ -61,7 +69,7 @@ public class Path {
 		open.add(start);
 		//generation count to determine distance from start
 		int generation = 0;
-		//actual pathfinding
+		//node searching
 		while(!open.isEmpty()) {
 			Node lowestVal = open.get(0); //cell with lowest distance total(first pass always is the starting cell)
 			int index = 0; //index of the coord to be removed
@@ -76,10 +84,12 @@ public class Path {
 			}
 			//find neighbors, spaghetti code
 			//North:
+			Node check;
 			if(lowestVal.getY()>0) {
 				int[] coords = {lowestVal.getX(),lowestVal.getY()-1};
-				Node check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ') {
+				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
+				if((coords[0]==end[0])&&(coords[1]==end[1])) {check.setParent(lowestVal);closed.add(check);break;}
+				else if(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ') {
 					check.setParent(lowestVal);
 					open.add(check);
 				}
@@ -91,8 +101,9 @@ public class Path {
 			//East:
 			if(lowestVal.getX()<g.width-1) {
 				int[] coords = {lowestVal.getX()+1,lowestVal.getY()};
-				Node check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(g.grid[lowestVal.getX()+1][lowestVal.getY()]==' ') {
+				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
+				if((coords[0]==end[0])&&(coords[1]==end[1])) {check.setParent(lowestVal);closed.add(check);break;}
+				else if(g.grid[lowestVal.getX()+1][lowestVal.getY()]==' ') {
 					check.setParent(lowestVal);
 					open.add(check);
 				}
@@ -104,8 +115,9 @@ public class Path {
 			//South:
 			if(lowestVal.getY()<g.height-1) {
 				int[] coords = {lowestVal.getX(),lowestVal.getY()+1};
-				Node check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(g.grid[lowestVal.getX()][lowestVal.getY()+1]==' ') {
+				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
+				if((coords[0]==end[0])&&(coords[1]==end[1])) {check.setParent(lowestVal);closed.add(check);break;}
+				else if(g.grid[lowestVal.getX()][lowestVal.getY()+1]==' ') {
 					check.setParent(lowestVal);
 					open.add(check);
 				}
@@ -117,8 +129,9 @@ public class Path {
 			//West:
 			if(lowestVal.getX()>0) {
 				int[] coords = {lowestVal.getX()-1,lowestVal.getY()};
-				Node check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(g.grid[lowestVal.getX()-1][lowestVal.getY()]==' ') {
+				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
+				if((coords[0]==end[0])&&(coords[1]==end[1])) {check.setParent(lowestVal);closed.add(check);break;}
+				else if(g.grid[lowestVal.getX()-1][lowestVal.getY()]==' ') {
 					check.setParent(lowestVal);
 					open.add(check);
 				}
@@ -127,9 +140,23 @@ public class Path {
 					closed.add(check);
 				}
 			}
-      
 			closed.add(open.get(index));
 			open.remove(index);
+			generation++;
+			System.out.print(generation);
+		}
+		//construct path
+		Node pushed = closed.get(closed.size()-1);
+		int c = 0;
+		while(true) {
+			path.push(pushed);
+			if((pushed.getX() == start.getX())&&(pushed.getY() == start.getY())) {
+				break;
+			}
+			Node temp = pushed.parent;
+			pushed = temp;
+			c++;
+			System.out.print(c);
 		}
 		return path;
 	}
