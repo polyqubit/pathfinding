@@ -48,7 +48,15 @@ public class Path {
 	static int distanceCheck(int x1, int y1, int x2, int y2) {
 		return abs(x1-x2) + abs(y1-y2);
 	}
-	public static ArrayList returnPath(Grid g, Node start, int[] end) {
+	static void p(String s){System.out.print(s);}
+	static void pArray(int[] a) {
+		p("{");
+		for(int i : a) {
+			p(" "+i+" ");
+		}
+		p("}");
+	}
+	public static ArrayList<Node> returnPath(Grid g, Node start, int[] end) {
 		ArrayList<Node> path = new ArrayList<>();
 		Stack<Node> outStack = aStarSearch(g,start,end);
 		while(!outStack.empty()) {
@@ -58,6 +66,7 @@ public class Path {
 	}
 	static Stack<Node> aStarSearch(Grid g, Node start, int[] end) {
 		//start is a Node and end is an array, for very arbitrary reasons
+		Scanner sc = new Scanner(System.in);  //for debugging purposes
 		Stack<Node> path = new Stack<>();     //To be interpreted into a path
 		ArrayList<Node> open = new ArrayList<>();   //cells to be explored
 		ArrayList<Node> closed = new ArrayList<>(); //cells already explored
@@ -76,18 +85,23 @@ public class Path {
 			int c = 0; //counter
 			//find lowest total
 			for(Node i : open) {
-				if((i.getX()+i.getY())<(lowestVal.getX()+lowestVal.getY())) {
+				if(i.getCost()<lowestVal.getCost()) {
 					index = c;
 					lowestVal = i;
 				}
 				c++;
 			}
+			generation = lowestVal.distA;
 			//find neighbors, spaghetti code
-			//North:
+			//p("Current node: { "+lowestVal.getX()+" "+lowestVal.getY()+" }\n");
 			Node check;
+			North:
 			if(lowestVal.getY()>0) {
 				int[] coords = {lowestVal.getX(),lowestVal.getY()-1};
+				if((coords[0]+coords[1])==0) {break North;}
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
+				if(closed.contains(check)) {break North;}
+				//p("NORTH");pArray(coords);p(" COST="+check.getCost()+" ");
 				if((coords[0]==end[0])&&(coords[1]==end[1])) {check.setParent(lowestVal);closed.add(check);break;}
 				else if(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ') {
 					check.setParent(lowestVal);
@@ -98,10 +112,12 @@ public class Path {
 					avoid.add(check);
 				}
 			}
-			//East:
+			East:
 			if(lowestVal.getX()<g.width-1) {
 				int[] coords = {lowestVal.getX()+1,lowestVal.getY()};
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
+				if(closed.contains(check)) {break East;}
+				//p("EAST");pArray(coords);p(" COST="+check.getCost()+" ");
 				if((coords[0]==end[0])&&(coords[1]==end[1])) {check.setParent(lowestVal);closed.add(check);break;}
 				else if(g.grid[lowestVal.getX()+1][lowestVal.getY()]==' ') {
 					check.setParent(lowestVal);
@@ -112,10 +128,12 @@ public class Path {
 					avoid.add(check);
 				}
 			}
-			//South:
+			South:
 			if(lowestVal.getY()<g.height-1) {
 				int[] coords = {lowestVal.getX(),lowestVal.getY()+1};
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
+				if(closed.contains(check)) {break South;}
+				//p("SOUTH");pArray(coords);p(" COST="+check.getCost()+" ");
 				if((coords[0]==end[0])&&(coords[1]==end[1])) {check.setParent(lowestVal);closed.add(check);break;}
 				else if(g.grid[lowestVal.getX()][lowestVal.getY()+1]==' ') {
 					check.setParent(lowestVal);
@@ -126,10 +144,13 @@ public class Path {
 					closed.add(check);
 				}
 			}
-			//West:
+			West:
 			if(lowestVal.getX()>0) {
 				int[] coords = {lowestVal.getX()-1,lowestVal.getY()};
+				if((coords[0]+coords[1])==0) {break West;}
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
+				if(closed.contains(check)) {break West;}
+				//p("WEST");pArray(coords);p(" COST="+check.getCost()+" ");
 				if((coords[0]==end[0])&&(coords[1]==end[1])) {check.setParent(lowestVal);closed.add(check);break;}
 				else if(g.grid[lowestVal.getX()-1][lowestVal.getY()]==' ') {
 					check.setParent(lowestVal);
@@ -143,10 +164,12 @@ public class Path {
 			closed.add(open.get(index));
 			open.remove(index);
 			generation++;
-			System.out.print(generation);
+			//p(" GEN="+generation+"");
+			//sc.nextLine();
 		}
 		//construct path
 		Node pushed = closed.get(closed.size()-1);
+		if((pushed.getX()+pushed.getY())!=(end[0]+end[1])) {p("Path not found!\n");return path;}
 		int c = 0;
 		while(true) {
 			path.push(pushed);
@@ -156,7 +179,7 @@ public class Path {
 			Node temp = pushed.parent;
 			pushed = temp;
 			c++;
-			System.out.print(c);
+			//System.out.println(c);
 		}
 		return path;
 	}
