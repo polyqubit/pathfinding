@@ -66,7 +66,7 @@ public class Path {
 	}
 	static Stack<Node> aStarSearch(Grid g, Node start, int[] end) {
 		//start is a Node and end is an array, for very arbitrary reasons
-		Scanner sc = new Scanner(System.in);  //for debugging purposes
+		//Scanner sc = new Scanner(System.in);  //for debugging purposes
 		Stack<Node> path = new Stack<>();     //To be interpreted into a path
 		ArrayList<Node> open = new ArrayList<>();   //cells to be explored
 		ArrayList<Node> closed = new ArrayList<>(); //cells already explored
@@ -170,7 +170,6 @@ public class Path {
 		//construct path
 		Node pushed = closed.get(closed.size()-1);
 		if((pushed.getX()+pushed.getY())!=(end[0]+end[1])) {p("Path not found!\n");return path;}
-		int c = 0;
 		while(true) {
 			path.push(pushed);
 			if((pushed.getX() == start.getX())&&(pushed.getY() == start.getY())) {
@@ -178,8 +177,6 @@ public class Path {
 			}
 			Node temp = pushed.parent;
 			pushed = temp;
-			c++;
-			//System.out.println(c);
 		}
 		return path;
 	}
