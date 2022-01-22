@@ -164,7 +164,7 @@ public class Path {
 			closed.add(open.get(index));
 			open.remove(index);
 			generation++;
-			//p(" GEN="+generation+"");
+			p(" GEN="+generation+"");
 			//sc.nextLine();
 		}
 		//construct path
