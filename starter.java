@@ -5,10 +5,14 @@ public class starter {
 	static void p(String s) {System.out.print(s);}
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		p("");
-		Grid g = new Grid(30,30);
+		p("Enter width of grid:");
+		int w = sc.nextInt(); sc.nextLine();
+		p("Enter height of grid:");
+		int h = sc.nextInt(); sc.nextLine();
+		Grid g = new Grid(w,h);
 		g.constructGrid();
 		p("\nGrid constructed successfully\n");
+
 		int[] start = {0,0};
 		int[] end = {g.width-1,g.height-1}; //redo to let user define
 		ArrayList<Node> path = Path.returnPath(g, new Node(start,0,0), end);
