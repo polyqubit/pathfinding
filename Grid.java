@@ -37,7 +37,7 @@ public class Grid {
 		//basically a maze generator, minus any skill
 		for(int i=0;i<height;i++) {
 			for(int j=0;j<width;j++) {
-				grid[i][j] = rand.nextDouble()<0.7 ? ' ' : '*';
+				grid[i][j] = rand.nextDouble()<0.8 ? ' ' : '*';
 			}
 		}
 		grid[0][0] = ' ';
