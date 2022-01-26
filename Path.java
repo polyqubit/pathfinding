@@ -107,7 +107,7 @@ public class Path {
 				String hashCheck = coords[0]+" "+coords[1];
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
 				if((coords[0]+coords[1])==0) {continue;}
-				else if(closedCoords.containsKey(hashCheck)) {continue;}
+				else if(closedCoords.containsKey(hashCheck)) {p("containsKey:North  ");continue;}
 				//p("NORTH");pArray(coords);p(" COST="+check.getCost()+" ");
 				if((coords[0]==end[0])&&(coords[1]==end[1])) {
 					check.setParent(lowestVal);
@@ -129,7 +129,7 @@ public class Path {
 				int[] coords = {lowestVal.getX()+1,lowestVal.getY()};
 				String hashCheck = coords[0]+" "+coords[1];
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(closedCoords.containsKey(hashCheck)) {continue;}
+				if(closedCoords.containsKey(hashCheck)) {p("containsKey:East  ");continue;}
 				//p("EAST");pArray(coords);p(" COST="+check.getCost()+" ");
 				else if((coords[0]==end[0])&&(coords[1]==end[1])) {
 					check.setParent(lowestVal);
@@ -151,7 +151,7 @@ public class Path {
 				int[] coords = {lowestVal.getX(),lowestVal.getY()+1};
 				String hashCheck = coords[0]+" "+coords[1];
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(closedCoords.containsKey(hashCheck)) {continue;}
+				if(closedCoords.containsKey(hashCheck)) {p("containsKey:South  ");continue;}
 				//p("SOUTH");pArray(coords);p(" COST="+check.getCost()+" ");
 				else if((coords[0]==end[0])&&(coords[1]==end[1])) {
 					check.setParent(lowestVal);
@@ -174,7 +174,7 @@ public class Path {
 				String hashCheck = coords[0]+" "+coords[1];
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
 				if((coords[0]+coords[1])==0) {continue;}
-				else if(closedCoords.containsKey(hashCheck)) {continue;}
+				else if(closedCoords.containsKey(hashCheck)) {p("containsKey:West ");continue;}
 				//p("WEST");pArray(coords);p(" COST="+check.getCost()+" ");
 				else if((coords[0]==end[0])&&(coords[1]==end[1])) {
 					check.setParent(lowestVal);
