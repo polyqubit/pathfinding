@@ -18,6 +18,8 @@ public class Grid {
 		else {grid = new char[10][10];}
 	}
 	public void print() {
+		int m_scaleFactor = 10/(1+width/50);
+		Rectangle r;
 		System.out.println("");
 		for(int i=0;i<width+2;i++) {
 			System.out.print("-");
@@ -29,19 +31,19 @@ public class Grid {
 				System.out.print(grid[i][j]);
 				switch(grid[i][j]) {
 					case ' ':
-						Rectangle r1 = new Rectangle(j*10, i*10, 10, 10);
-						r1.setColor(new Color(100, 200, 255));
-						r1.fill();
+						r = new Rectangle(j*m_scaleFactor, i*m_scaleFactor, m_scaleFactor, m_scaleFactor);
+						r.setColor(new Color(100, 200, 255));
+						r.fill();
 					break;
 					case '*':
-						Rectangle r2 = new Rectangle(j*10, i*10, 10, 10);
-						r2.setColor(new Color(0, 0, 0));
-						r2.fill();
+						r = new Rectangle(j*m_scaleFactor, i*m_scaleFactor, m_scaleFactor, m_scaleFactor);
+						r.setColor(new Color(0, 0, 0));
+						r.fill();
 					break;
 					case 'O':
-						Rectangle r3 = new Rectangle(j*10, i*10, 10, 10);
-						r3.setColor(new Color(30, 255, 30));
-						r3.fill();
+						r = new Rectangle(j*m_scaleFactor, i*m_scaleFactor, m_scaleFactor, m_scaleFactor);
+						r.setColor(new Color(30, 255, 30));
+						r.fill();
 					break;
 				}
 			}

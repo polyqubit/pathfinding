@@ -49,7 +49,7 @@ public class Path {
 	} */
 	static int abs(int a) {return (a<0) ? -1*a : a;}
 	static double distanceCheck(int x1, int y1, int x2, int y2) {
-		return 0*abs(x1-x2) + 1.25*abs(y1-y2);
+		return abs(x1-x2) + 1.3*abs(y1-y2);
 	}
 	static void p(String s){System.out.print(s);}
 	static void pArray(int[] a) {
@@ -84,6 +84,8 @@ public class Path {
 		open.add(start);
 		//generation count to determine distance from start
 		int generation = 0;
+		//multiply square size
+		int m_scaleFactor = 10/(1+g.width/50);
 		//node searching
 		while(!open.isEmpty()) {
 			Node lowestVal = open.get(0); //cell with lowest distance total(first pass always is the starting cell)
@@ -102,7 +104,7 @@ public class Path {
 			p("PROGRESS: "+lowestVal.distB+"   ");
 			p("NODES: "+closed.size()+"   ");
 			p("Current node: { "+lowestVal.getX()+" "+lowestVal.getY()+" }\n");
-			Rectangle r = new Rectangle(lowestVal.getX()*10, lowestVal.getY()*10, 10, 10);
+			Rectangle r = new Rectangle(lowestVal.getX()*m_scaleFactor, lowestVal.getY()*m_scaleFactor, m_scaleFactor, m_scaleFactor);
 			r.setColor(new Color(255, 30, 30));
 			r.fill();
 			Node check;
