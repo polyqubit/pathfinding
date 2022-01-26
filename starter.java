@@ -1,15 +1,15 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import pkg.Canvas;
+
 public class starter {
 	static void p(String s) {System.out.print(s);}
 	public static void main(String[] args) {
 		try (Scanner sc = new Scanner(System.in)) {
-			p("Enter width of grid:");
+			p("Enter side length of grid:");
 			int w = sc.nextInt(); sc.nextLine();
-			p("Enter height of grid:");
-			int h = sc.nextInt(); sc.nextLine();
-			Grid g = new Grid(w,h);
+			Grid g = new Grid(w,w);
 			g.constructGrid();
 			g.print();
 			p("\nGrid constructed successfully\n");
@@ -24,6 +24,7 @@ public class starter {
 				//p(" }");
 				g.grid[i.getX()][i.getY()] = 'O';
 			}
+			Canvas.getInstance().clear();
 			g.print();
 			p("\n");
 			for(int i=0;i<path.size()-1;i++) {

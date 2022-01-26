@@ -18,7 +18,7 @@ public class Grid {
 		else {grid = new char[10][10];}
 	}
 	public void print() {
-		int m_scaleFactor = 10/(1+width/50);
+		int m_scaleFactor =(int) 10/(1+width/75);
 		Rectangle r;
 		System.out.println("");
 		for(int i=0;i<width+2;i++) {
