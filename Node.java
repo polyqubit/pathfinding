@@ -8,9 +8,9 @@
 public class Node {
     Integer[] pos = {0,0};
     int distA = 0;
-    int distB = 0;
+    double distB = 0;
     public Node parent;
-    public Node(int[] position, int distA, int distB) {
+    public Node(int[] position, int distA, double distB) {
         //distA: distance from start
         //distB: distance from goal
         if(position.length!=2) {return;}
@@ -31,7 +31,7 @@ public class Node {
     public int getY() {
         return pos[1];
     }
-	public int getCost() {
+	public double getCost() {
 		return distA + distB;
 	}
 }

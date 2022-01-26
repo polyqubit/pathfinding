@@ -1,4 +1,7 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Stack;
+import pkg.*;
 
 public class Path {
 	//Checking if a path exists before actually finding a path
@@ -45,8 +48,8 @@ public class Path {
 		return false;
 	} */
 	static int abs(int a) {return (a<0) ? -1*a : a;}
-	static int distanceCheck(int x1, int y1, int x2, int y2) {
-		return abs(x1-x2) + abs(y1-y2);
+	static double distanceCheck(int x1, int y1, int x2, int y2) {
+		return 0*abs(x1-x2) + 1.25*abs(y1-y2);
 	}
 	static void p(String s){System.out.print(s);}
 	static void pArray(int[] a) {
@@ -70,7 +73,6 @@ public class Path {
 		Stack<Node> path = new Stack<>();     //To be interpreted into a path
 		ArrayList<Node> open = new ArrayList<>();   //cells to be explored
 		ArrayList<Node> closed = new ArrayList<>(); //cells already explored
-		ArrayList<Node> avoid = new ArrayList<>(); //obstacle cells
 		//DISTANCE: distance from goal is |xCurrent-xFinal|+|yStart-yFinal|
 		//distance from start is the shortest *known* amount of cells to travel to get to that position
 		HashMap<String,Integer> closedCoords = new HashMap<>(); //check if the location has already been explored
@@ -100,13 +102,16 @@ public class Path {
 			p("PROGRESS: "+lowestVal.distB+"   ");
 			p("NODES: "+closed.size()+"   ");
 			p("Current node: { "+lowestVal.getX()+" "+lowestVal.getY()+" }\n");
+			Rectangle r = new Rectangle(lowestVal.getX()*10, lowestVal.getY()*10, 10, 10);
+			r.setColor(new Color(255, 30, 30));
+			r.fill();
 			Node check;
 			//North:
 			if(lowestVal.getY()>0) {
 				int[] coords = {lowestVal.getX(),lowestVal.getY()-1};
 				String hashCheck = new String(coords[0]+" "+coords[1]);
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(!closedCoords.containsKey(hashCheck)&&((coords[0]+coords[1])>0)&&(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ')) {
+				if(!closedCoords.containsKey(hashCheck)&&((coords[0]+coords[1])>0)&&(g.grid[coords[0]][coords[1]]==' ')) {
 					//if((coords[0]+coords[1])<=0) {p("BOUNDARY  ");}
 					//else if(closedCoords.containsKey(hashCheck)) {continue;} //continue; p("containsKey:North  ");
 					//p("NORTH");pArray(coords);p(" COST="+check.getCost()+" ");
@@ -126,7 +131,7 @@ public class Path {
 				int[] coords = {lowestVal.getX()+1,lowestVal.getY()};
 				String hashCheck = coords[0]+" "+coords[1];
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(!closedCoords.containsKey(hashCheck)&&((coords[0]+coords[1])>0)&&(g.grid[lowestVal.getX()+1][lowestVal.getY()]==' ')) {
+				if(!closedCoords.containsKey(hashCheck)&&((coords[0]+coords[1])>0)&&(g.grid[coords[0]][coords[1]]==' ')) {
 					//if(closedCoords.containsKey(hashCheck)) {continue;} //continue; p("containsKey:East  ");
 					//p("EAST");pArray(coords);p(" COST="+check.getCost()+" ");
 					if((coords[0]==end[0])&&(coords[1]==end[1])) {
@@ -145,7 +150,7 @@ public class Path {
 				int[] coords = {lowestVal.getX(),lowestVal.getY()+1};
 				String hashCheck = new String(coords[0]+" "+coords[1]);
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(!closedCoords.containsKey(hashCheck)&&((coords[0]+coords[1])>0)&&(g.grid[lowestVal.getX()][lowestVal.getY()+1]==' ')) {
+				if(!closedCoords.containsKey(hashCheck)&&((coords[0]+coords[1])>0)&&(g.grid[coords[0]][coords[1]]==' ')) {
 					//if(closedCoords.containsKey(hashCheck)) {continue;} //continue; p("containsKey:South  ");
 					//p("SOUTH");pArray(coords);p(" COST="+check.getCost()+" ");
 					if((coords[0]==end[0])&&(coords[1]==end[1])) {
@@ -164,7 +169,7 @@ public class Path {
 				int[] coords = {lowestVal.getX()-1,lowestVal.getY()};
 				String hashCheck = new String(coords[0]+" "+coords[1]);
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(!closedCoords.containsKey(hashCheck)&&((coords[0]+coords[1])>0)&&(g.grid[lowestVal.getX()-1][lowestVal.getY()]==' ')) {
+				if(!closedCoords.containsKey(hashCheck)&&((coords[0]+coords[1])>0)&&(g.grid[coords[0]][coords[1]]==' ')) {
 					//if((coords[0]+coords[1])<=0) {p("BOUNDARY  ");}
 					//else if(closedCoords.containsKey(hashCheck)) {continue;} //continue; p("containsKey:West ");
 					//p("WEST");pArray(coords);p(" COST="+check.getCost()+" ");

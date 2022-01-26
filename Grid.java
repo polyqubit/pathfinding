@@ -29,14 +29,19 @@ public class Grid {
 				System.out.print(grid[i][j]);
 				switch(grid[i][j]) {
 					case ' ':
-						Rectangle r1 = new Rectangle(i*20, j*20, 20, 20);
+						Rectangle r1 = new Rectangle(j*10, i*10, 10, 10);
 						r1.setColor(new Color(100, 200, 255));
 						r1.fill();
 					break;
 					case '*':
-						Rectangle r2 = new Rectangle(i*20, j*20, 20, 20);
+						Rectangle r2 = new Rectangle(j*10, i*10, 10, 10);
 						r2.setColor(new Color(0, 0, 0));
 						r2.fill();
+					break;
+					case 'O':
+						Rectangle r3 = new Rectangle(j*10, i*10, 10, 10);
+						r3.setColor(new Color(30, 255, 30));
+						r3.fill();
 					break;
 				}
 			}
