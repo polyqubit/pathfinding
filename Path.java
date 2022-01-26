@@ -104,24 +104,26 @@ public class Path {
 			//North:
 			if(lowestVal.getY()>0) {
 				int[] coords = {lowestVal.getX(),lowestVal.getY()-1};
-				String hashCheck = coords[0]+" "+coords[1];
+				String hashCheck = new String(coords[0]+" "+coords[1]);
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if((coords[0]+coords[1])==0) {continue;}
-				else if(closedCoords.containsKey(hashCheck)) {p("containsKey:North  ");continue;}
-				//p("NORTH");pArray(coords);p(" COST="+check.getCost()+" ");
-				if((coords[0]==end[0])&&(coords[1]==end[1])) {
-					check.setParent(lowestVal);
-					closed.add(check);
-					break;
-				}
-				else if(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ') {
-					check.setParent(lowestVal);
-					open.add(check);
-				}
-				else {
-					closed.add(check);
-					avoid.add(check);
-					closedCoords.put(hashCheck,0);
+				if(!closedCoords.containsKey(hashCheck)&&((coords[0]+coords[1])<=0)) {
+					//if((coords[0]+coords[1])<=0) {p("BOUNDARY  ");}
+					//else if(closedCoords.containsKey(hashCheck)) {continue;} //continue; p("containsKey:North  ");
+					//p("NORTH");pArray(coords);p(" COST="+check.getCost()+" ");
+					if((coords[0]==end[0])&&(coords[1]==end[1])) {
+						check.setParent(lowestVal);
+						closed.add(check);
+						break;
+					}
+					else if(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ') {
+						check.setParent(lowestVal);
+						open.add(check);
+					}
+					else {
+						closed.add(check);
+						avoid.add(check);
+						closedCoords.put(hashCheck,0);
+					}
 				}
 			}
 			//East:
@@ -129,69 +131,76 @@ public class Path {
 				int[] coords = {lowestVal.getX()+1,lowestVal.getY()};
 				String hashCheck = coords[0]+" "+coords[1];
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(closedCoords.containsKey(hashCheck)) {p("containsKey:East  ");continue;}
-				//p("EAST");pArray(coords);p(" COST="+check.getCost()+" ");
-				else if((coords[0]==end[0])&&(coords[1]==end[1])) {
-					check.setParent(lowestVal);
-					closed.add(check);
-					break;
-				}
-				else if(g.grid[lowestVal.getX()+1][lowestVal.getY()]==' ') {
-					check.setParent(lowestVal);
-					open.add(check);
-				}
-				else {
-					closed.add(check);
-					avoid.add(check);
-					closedCoords.put(hashCheck,0);
+				if(!closedCoords.containsKey(hashCheck)) {
+					//if(closedCoords.containsKey(hashCheck)) {continue;} //continue; p("containsKey:East  ");
+					//p("EAST");pArray(coords);p(" COST="+check.getCost()+" ");
+					if((coords[0]==end[0])&&(coords[1]==end[1])) {
+						check.setParent(lowestVal);
+						closed.add(check);
+						break;
+					}
+					else if(g.grid[lowestVal.getX()+1][lowestVal.getY()]==' ') {
+						check.setParent(lowestVal);
+						open.add(check);
+					}
+					else {
+						closed.add(check);
+						avoid.add(check);
+						closedCoords.put(hashCheck,0);
+					}
 				}
 			}
 			//South:
 			if(lowestVal.getY()<g.height-1) {
 				int[] coords = {lowestVal.getX(),lowestVal.getY()+1};
-				String hashCheck = coords[0]+" "+coords[1];
+				String hashCheck = new String(coords[0]+" "+coords[1]);
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(closedCoords.containsKey(hashCheck)) {p("containsKey:South  ");continue;}
-				//p("SOUTH");pArray(coords);p(" COST="+check.getCost()+" ");
-				else if((coords[0]==end[0])&&(coords[1]==end[1])) {
-					check.setParent(lowestVal);
-					closed.add(check);
-					break;
-				}
-				else if(g.grid[lowestVal.getX()][lowestVal.getY()+1]==' ') {
-					check.setParent(lowestVal);
-					open.add(check);
-				}
-				else {
-					avoid.add(check);
-					closed.add(check);
-					closedCoords.put(hashCheck,0);
+				if(!closedCoords.containsKey(hashCheck)&&((coords[0]+coords[1])<=0)) {
+					//if(closedCoords.containsKey(hashCheck)) {continue;} //continue; p("containsKey:South  ");
+					//p("SOUTH");pArray(coords);p(" COST="+check.getCost()+" ");
+					if((coords[0]==end[0])&&(coords[1]==end[1])) {
+						check.setParent(lowestVal);
+						closed.add(check);
+						break;
+					}
+					else if(g.grid[lowestVal.getX()][lowestVal.getY()+1]==' ') {
+						check.setParent(lowestVal);
+						open.add(check);
+					}
+					else {
+						avoid.add(check);
+						closed.add(check);
+						closedCoords.put(hashCheck,0);
+					}
 				}
 			}
 			//West:
 			if(lowestVal.getX()>0) {
 				int[] coords = {lowestVal.getX()-1,lowestVal.getY()};
-				String hashCheck = coords[0]+" "+coords[1];
+				String hashCheck = new String(coords[0]+" "+coords[1]);
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if((coords[0]+coords[1])==0) {continue;}
-				else if(closedCoords.containsKey(hashCheck)) {p("containsKey:West ");continue;}
-				//p("WEST");pArray(coords);p(" COST="+check.getCost()+" ");
-				else if((coords[0]==end[0])&&(coords[1]==end[1])) {
-					check.setParent(lowestVal);
-					closed.add(check);
-					break;
-				}
-				else if(g.grid[lowestVal.getX()-1][lowestVal.getY()]==' ') {
-					check.setParent(lowestVal);
-					open.add(check);
-				}
-				else {
-					avoid.add(check);
-					closed.add(check);
-					closedCoords.put(hashCheck,0);
+				if(!closedCoords.containsKey(hashCheck)&&((coords[0]+coords[1])<=0)) {
+					//if((coords[0]+coords[1])<=0) {p("BOUNDARY  ");}
+					//else if(closedCoords.containsKey(hashCheck)) {continue;} //continue; p("containsKey:West ");
+					//p("WEST");pArray(coords);p(" COST="+check.getCost()+" ");
+					if((coords[0]==end[0])&&(coords[1]==end[1])) {
+						check.setParent(lowestVal);
+						closed.add(check);
+						break;
+					}
+					else if(g.grid[lowestVal.getX()-1][lowestVal.getY()]==' ') {
+						check.setParent(lowestVal);
+						open.add(check);
+					}
+					else {
+						avoid.add(check);
+						closed.add(check);
+						closedCoords.put(hashCheck,0);
+					}
 				}
 			}
 			closed.add(open.get(index));
+			closedCoords.put(new String(lowestVal.getX()+" "+lowestVal.getY()),0);
 			open.remove(index);
 			generation++;
 			//p(" GEN="+generation+"");

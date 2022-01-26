@@ -17,6 +17,7 @@ public class Grid {
 		else {grid = new char[10][10];}
 	}
 	public void print() {
+		System.out.println("");
 		for(int i=0;i<width+2;i++) {
 			System.out.print("-");
 		}
