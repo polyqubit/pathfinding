@@ -1,4 +1,5 @@
 import java.util.Random;
+import pkg.*;
 
 public class Grid {
 	public int width, height;
@@ -26,6 +27,18 @@ public class Grid {
 			System.out.print("|");
 			for(int j=0;j<grid[i].length;j++) {
 				System.out.print(grid[i][j]);
+				switch(grid[i][j]) {
+					case ' ':
+						Rectangle r1 = new Rectangle(i*20, j*20, 20, 20);
+						r1.setColor(new Color(100, 200, 255));
+						r1.fill();
+					break;
+					case '*':
+						Rectangle r2 = new Rectangle(i*20, j*20, 20, 20);
+						r2.setColor(new Color(0, 0, 0));
+						r2.fill();
+					break;
+				}
 			}
 			System.out.println("|");
 		}

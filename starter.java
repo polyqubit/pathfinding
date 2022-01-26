@@ -11,6 +11,7 @@ public class starter {
 			int h = sc.nextInt(); sc.nextLine();
 			Grid g = new Grid(w,h);
 			g.constructGrid();
+			g.print();
 			p("\nGrid constructed successfully\n");
 
 			int[] start = {0,0};

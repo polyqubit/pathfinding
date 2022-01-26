@@ -97,16 +97,16 @@ public class Path {
 			}
 			generation = lowestVal.distA;
 			//find neighbors, spaghetti code
-			//p("Current node: { "+lowestVal.getX()+" "+lowestVal.getY()+" }\n");
 			p("PROGRESS: "+lowestVal.distB+"   ");
-			p("NODES: "+closed.size()+"\n");
+			p("NODES: "+closed.size()+"   ");
+			p("Current node: { "+lowestVal.getX()+" "+lowestVal.getY()+" }\n");
 			Node check;
 			//North:
 			if(lowestVal.getY()>0) {
 				int[] coords = {lowestVal.getX(),lowestVal.getY()-1};
 				String hashCheck = new String(coords[0]+" "+coords[1]);
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(!closedCoords.containsKey(hashCheck)&&((coords[0]+coords[1])<=0)) {
+				if(!closedCoords.containsKey(hashCheck)&&((coords[0]+coords[1])>0)&&(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ')) {
 					//if((coords[0]+coords[1])<=0) {p("BOUNDARY  ");}
 					//else if(closedCoords.containsKey(hashCheck)) {continue;} //continue; p("containsKey:North  ");
 					//p("NORTH");pArray(coords);p(" COST="+check.getCost()+" ");
@@ -115,23 +115,18 @@ public class Path {
 						closed.add(check);
 						break;
 					}
-					else if(g.grid[lowestVal.getX()][lowestVal.getY()-1]==' ') {
+					else {
 						check.setParent(lowestVal);
 						open.add(check);
 					}
-					else {
-						closed.add(check);
-						avoid.add(check);
-						closedCoords.put(hashCheck,0);
-					}
-				}
+				} //else{p(" containsKey:North ");}
 			}
 			//East:
 			if(lowestVal.getX()<g.width-1) {
 				int[] coords = {lowestVal.getX()+1,lowestVal.getY()};
 				String hashCheck = coords[0]+" "+coords[1];
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(!closedCoords.containsKey(hashCheck)) {
+				if(!closedCoords.containsKey(hashCheck)&&((coords[0]+coords[1])>0)&&(g.grid[lowestVal.getX()+1][lowestVal.getY()]==' ')) {
 					//if(closedCoords.containsKey(hashCheck)) {continue;} //continue; p("containsKey:East  ");
 					//p("EAST");pArray(coords);p(" COST="+check.getCost()+" ");
 					if((coords[0]==end[0])&&(coords[1]==end[1])) {
@@ -139,23 +134,18 @@ public class Path {
 						closed.add(check);
 						break;
 					}
-					else if(g.grid[lowestVal.getX()+1][lowestVal.getY()]==' ') {
+					else {
 						check.setParent(lowestVal);
 						open.add(check);
 					}
-					else {
-						closed.add(check);
-						avoid.add(check);
-						closedCoords.put(hashCheck,0);
-					}
-				}
+				} //else{p(" containsKey:East ");}
 			}
 			//South:
 			if(lowestVal.getY()<g.height-1) {
 				int[] coords = {lowestVal.getX(),lowestVal.getY()+1};
 				String hashCheck = new String(coords[0]+" "+coords[1]);
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(!closedCoords.containsKey(hashCheck)&&((coords[0]+coords[1])<=0)) {
+				if(!closedCoords.containsKey(hashCheck)&&((coords[0]+coords[1])>0)&&(g.grid[lowestVal.getX()][lowestVal.getY()+1]==' ')) {
 					//if(closedCoords.containsKey(hashCheck)) {continue;} //continue; p("containsKey:South  ");
 					//p("SOUTH");pArray(coords);p(" COST="+check.getCost()+" ");
 					if((coords[0]==end[0])&&(coords[1]==end[1])) {
@@ -163,23 +153,18 @@ public class Path {
 						closed.add(check);
 						break;
 					}
-					else if(g.grid[lowestVal.getX()][lowestVal.getY()+1]==' ') {
+					else {
 						check.setParent(lowestVal);
 						open.add(check);
 					}
-					else {
-						avoid.add(check);
-						closed.add(check);
-						closedCoords.put(hashCheck,0);
-					}
-				}
+				} //else{p(" containsKey:South ");}
 			}
 			//West:
 			if(lowestVal.getX()>0) {
 				int[] coords = {lowestVal.getX()-1,lowestVal.getY()};
 				String hashCheck = new String(coords[0]+" "+coords[1]);
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(!closedCoords.containsKey(hashCheck)&&((coords[0]+coords[1])<=0)) {
+				if(!closedCoords.containsKey(hashCheck)&&((coords[0]+coords[1])>0)&&(g.grid[lowestVal.getX()-1][lowestVal.getY()]==' ')) {
 					//if((coords[0]+coords[1])<=0) {p("BOUNDARY  ");}
 					//else if(closedCoords.containsKey(hashCheck)) {continue;} //continue; p("containsKey:West ");
 					//p("WEST");pArray(coords);p(" COST="+check.getCost()+" ");
@@ -188,22 +173,20 @@ public class Path {
 						closed.add(check);
 						break;
 					}
-					else if(g.grid[lowestVal.getX()-1][lowestVal.getY()]==' ') {
+					else {
 						check.setParent(lowestVal);
 						open.add(check);
 					}
-					else {
-						avoid.add(check);
-						closed.add(check);
-						closedCoords.put(hashCheck,0);
-					}
-				}
+				} //else{p(" containsKey:West ");}
 			}
-			closed.add(open.get(index));
-			closedCoords.put(new String(lowestVal.getX()+" "+lowestVal.getY()),0);
+			String hs = new String(lowestVal.getX()+" "+lowestVal.getY());
+			if(!closedCoords.containsKey(hs)) {
+				closed.add(open.get(index));
+				closedCoords.put(hs,0);
+			}
 			open.remove(index);
 			generation++;
-			//p(" GEN="+generation+"");
+			//p(" GEN="+generation+" ");
 			//sc.nextLine();
 		}
 		//construct path
