@@ -42,7 +42,7 @@ public class Grid {
 					break;
 					case 'O':
 						r = new Rectangle(j*m_scaleFactor, i*m_scaleFactor, m_scaleFactor, m_scaleFactor);
-						r.setColor(new Color(30, 255, 30));
+						r.setColor(new Color(30, 180, 30));
 						r.fill();
 					break;
 				}

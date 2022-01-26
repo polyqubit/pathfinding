@@ -101,9 +101,9 @@ public class Path {
 			}
 			generation = lowestVal.distA;
 			//find neighbors, spaghetti code
-			p("PROGRESS: "+lowestVal.distB+"   ");
-			p("NODES: "+closed.size()+"   ");
-			p("Current node: { "+lowestVal.getX()+" "+lowestVal.getY()+" }\n");
+			//p("PROGRESS: "+lowestVal.distB+"   ");
+			//p("NODES: "+closed.size()+"   ");
+			//p("Current node: { "+lowestVal.getX()+" "+lowestVal.getY()+" }\n");
 			Rectangle r = new Rectangle(lowestVal.getX()*m_scaleFactor, lowestVal.getY()*m_scaleFactor, m_scaleFactor, m_scaleFactor);
 			r.setColor(new Color(255, 30, 30));
 			r.fill();
