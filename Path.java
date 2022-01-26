@@ -73,7 +73,10 @@ public class Path {
 		ArrayList<Node> avoid = new ArrayList<>(); //obstacle cells
 		//DISTANCE: distance from goal is |xCurrent-xFinal|+|yStart-yFinal|
 		//distance from start is the shortest *known* amount of cells to travel to get to that position
-		HashMap<Integer,Integer> closedCoords = new HashMap<>(); //check if the location has already been explored
+		HashMap<String,Integer> closedCoords = new HashMap<>(); //check if the location has already been explored
+		//HashMap is a String, Integer because having two Integers to represent coords caused problems
+		//The String is Xcoord + " " + Ycoord
+		//The Integer is 0
 
 		//add the origin node to the open list
 		open.add(start);
@@ -98,12 +101,13 @@ public class Path {
 			p("PROGRESS: "+lowestVal.distB+"   ");
 			p("NODES: "+closed.size()+"\n");
 			Node check;
-			North:
+			//North:
 			if(lowestVal.getY()>0) {
 				int[] coords = {lowestVal.getX(),lowestVal.getY()-1};
-				if((coords[0]+coords[1])==0) {break North;}
+				String hashCheck = coords[0]+" "+coords[1];
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(closedCoords.containsKey(coords[0])&&closedCoords.containsValue(coords[1])) {break North;}
+				if((coords[0]+coords[1])==0) {continue;}
+				else if(closedCoords.containsKey(hashCheck)) {continue;}
 				//p("NORTH");pArray(coords);p(" COST="+check.getCost()+" ");
 				if((coords[0]==end[0])&&(coords[1]==end[1])) {
 					check.setParent(lowestVal);
@@ -117,16 +121,17 @@ public class Path {
 				else {
 					closed.add(check);
 					avoid.add(check);
-					closedCoords.put(coords[0],coords[1]);
+					closedCoords.put(hashCheck,0);
 				}
 			}
-			East:
+			//East:
 			if(lowestVal.getX()<g.width-1) {
 				int[] coords = {lowestVal.getX()+1,lowestVal.getY()};
+				String hashCheck = coords[0]+" "+coords[1];
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(closedCoords.containsKey(coords[0])&&closedCoords.containsValue(coords[1])) {break East;}
+				if(closedCoords.containsKey(hashCheck)) {continue;}
 				//p("EAST");pArray(coords);p(" COST="+check.getCost()+" ");
-				if((coords[0]==end[0])&&(coords[1]==end[1])) {
+				else if((coords[0]==end[0])&&(coords[1]==end[1])) {
 					check.setParent(lowestVal);
 					closed.add(check);
 					break;
@@ -138,16 +143,17 @@ public class Path {
 				else {
 					closed.add(check);
 					avoid.add(check);
-					closedCoords.put(coords[0],coords[1]);
+					closedCoords.put(hashCheck,0);
 				}
 			}
-			South:
+			//South:
 			if(lowestVal.getY()<g.height-1) {
 				int[] coords = {lowestVal.getX(),lowestVal.getY()+1};
+				String hashCheck = coords[0]+" "+coords[1];
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(closedCoords.containsKey(coords[0])&&closedCoords.containsValue(coords[1])) {break South;}
+				if(closedCoords.containsKey(hashCheck)) {continue;}
 				//p("SOUTH");pArray(coords);p(" COST="+check.getCost()+" ");
-				if((coords[0]==end[0])&&(coords[1]==end[1])) {
+				else if((coords[0]==end[0])&&(coords[1]==end[1])) {
 					check.setParent(lowestVal);
 					closed.add(check);
 					break;
@@ -159,17 +165,18 @@ public class Path {
 				else {
 					avoid.add(check);
 					closed.add(check);
-					closedCoords.put(coords[0],coords[1]);
+					closedCoords.put(hashCheck,0);
 				}
 			}
-			West:
+			//West:
 			if(lowestVal.getX()>0) {
 				int[] coords = {lowestVal.getX()-1,lowestVal.getY()};
-				if((coords[0]+coords[1])==0) {break West;}
+				String hashCheck = coords[0]+" "+coords[1];
 				check = new Node(coords,generation+1,distanceCheck(lowestVal.getX(),lowestVal.getY(),end[0],end[1]));
-				if(closedCoords.containsKey(coords[0])&&closedCoords.containsValue(coords[1])) {break West;}
+				if((coords[0]+coords[1])==0) {continue;}
+				else if(closedCoords.containsKey(hashCheck)) {continue;}
 				//p("WEST");pArray(coords);p(" COST="+check.getCost()+" ");
-				if((coords[0]==end[0])&&(coords[1]==end[1])) {
+				else if((coords[0]==end[0])&&(coords[1]==end[1])) {
 					check.setParent(lowestVal);
 					closed.add(check);
 					break;
@@ -181,7 +188,7 @@ public class Path {
 				else {
 					avoid.add(check);
 					closed.add(check);
-					closedCoords.put(coords[0],coords[1]);
+					closedCoords.put(hashCheck,0);
 				}
 			}
 			closed.add(open.get(index));
